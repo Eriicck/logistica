@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transportes y Mudanzas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styles */
+        :root {
+            --primary-color: #007BFF;
+            --secondary-color: #5d616a;
+            --background-light: #f4f7f6;
+            --text-dark: #333;
+            --text-light: #fff;
+            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-dark: 0 10px 15px rgba(0, 0, 0, 0.2);
+            --border-radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--background-light);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        section {
+            padding: 6rem 0;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        /* Header & Navigation */
+        .header {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-light);
+            overflow: hidden;
+        }
+
+        .header-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            z-index: -1;
+        }
+
+        .header-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .header-image.active {
+            opacity: 1;
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 0;
+        }
+
+        .header-content {
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: var(--shadow-dark);
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            text-shadow: var(--shadow-dark);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow-light);
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-item a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item a:hover {
+            color: var(--primary-color);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: var(--text-dark);
+            transition: all 0.3s ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 60px;
+                flex-direction: column;
+                background-color: rgba(255, 255, 255, 0.95);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                padding-bottom: 1rem;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-item {
+                margin: 1.5rem 0;
+            }
+
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+
+        /* Call to Action */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow-light);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        /* Video Section */
+        .video-section .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+        }
+
+.video-wrapper {
+    position: relative;
+    max-width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    box-shadow: var(--shadow-dark);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin: 0 auto; /* This is the key line */
+}
+
+        .video-wrapper iframe {
+            position: absolute;
+            align-items: center;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            
+        }
+
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            background-color: var(--text-light);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .gallery-item-caption {
+            padding: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Contact Form */
+        .contact-form-container {
+            background-color: var(--text-light);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: rgb(39, 39, 126);
+            color: var(--text-light);
+            padding: 4rem 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .footer-section h4 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section a:hover {
+            text-decoration: underline;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #25D366;
+            color: var(--text-light);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: var(--shadow-dark);
+            z-index: 999;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+            .contact-form-container {
+                padding: 1rem;
+            }
+            .footer-grid {
+                text-align: left;
+                gap: 1.5rem;
+            }
+            .footer-section h4 {
+                text-align: center;
+            }
+            .social-icons {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="#" class="logo">Transportes & Mudanzas</a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#inicio">Inicio</a></li>
+                <li class="nav-item"><a href="#servicios">Servicios</a></li>
+                <li class="nav-item"><a href="#galeria">Galería</a></li>
+                <li class="nav-item"><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="header" id="inicio">
+        <div class="header-image-container">
+            <!-- Replace with your actual image URLs -->
+            <img src="https://www.kiwinube.com/images/media/content/empresa-mudanzas-3-1280px.jpg" class="header-image" alt="Nuestros Camiones">
+            <img src="https://assets.website-files.com/5b5b750d2461b369e45b3fe7/5b64a0c870084d87c7ea85e0_banner%20costa%20new-min%20(1).jpg" class="header-image active" alt="Nuestra Empresa">
+            <img src="https://i0.wp.com/expresojet.com.ar/wp-content/uploads/2022/08/Diseno-sin-titulo-2022-08-27T104956.320.png?w=1800&ssl=1" class="header-image" alt="Personal Profesional">
+        </div>
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <h1>Expertos en Fletes y Mudanzas</h1>
+            <p>Servicios de transporte confiable en Encarnación, Paraguay y Posadas, Argentina. Conectamos tus destinos.</p>
+            <a href="#contacto" class="btn">Solicitar Presupuesto</a>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section id="servicios">
+        <div class="container">
+            <h2>Nuestros Servicios</h2>
+            <!-- Video Section -->
+            <div class="video-section">
+                <div class="video-wrapper">
+                    <!-- Replace the YouTube video ID with your own -->
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/MVAOJQHq3xs?si=dtl3Cj7FN1sk4VYa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="galeria">
+        <div class="container">
+            <h2>Nuestra Galería</h2>
+            <div class="gallery-grid">
+                <!-- Gallery Item 1 -->
+                <div class="gallery-item">
+                    <img src="img/Imagen de WhatsApp 2025-08-20 a las 11.47.14_15641875.jpg" alt="Flete de carga pesada">
+                    <div class="gallery-item-caption">Transporte de carga pesada</div>
+                </div>
+                <!-- Gallery Item 2 -->
+                <div class="gallery-item">
+                    <img src="https://img.freepik.com/foto-gratis/joven-familia-hija-pequena-mudan-nueva-casa_1303-23750.jpg?semt=ais_hybrid&w=740&q=80" alt="Mudanza de hogar">
+                    <div class="gallery-item-caption">Mudanza familiar</div>
+                </div>
+                <!-- Gallery Item 3 -->
+                <div class="gallery-item">
+                    <img src="img/Imagen de WhatsApp 2025-08-20 a las 11.47.15_381e7997.jpg" alt="Transporte internacional">
+                    <div class="gallery-item-caption">Embalaje Profesional</div>
+                </div>
+                <!-- Gallery Item 4 -->
+                <div class="gallery-item">
+                    <img src="img/Imagen de WhatsApp 2025-08-20 a las 11.47.15_389b2a2e.jpg" alt="Embalaje de objetos">
+                    <div class="gallery-item-caption">Transporte internacional</div>
+                </div>
+                <!-- Gallery Item 5 -->
+                <div class="gallery-item">
+                    <img src="img/Imagen de WhatsApp 2025-08-20 a las 11.47.15_9a343610.jpg" alt="Carga segura de productos">
+                    <div class="gallery-item-caption">Carga segura</div>
+                </div>
+                <!-- Gallery Item 6 -->
+                <div class="gallery-item">
+                    <img src="img/Imagen de WhatsApp 2025-08-20 a las 11.47.16_fe8d6041.jpg" alt="Camión en Posadas">
+                    <div class="gallery-item-caption">Servicio en Posadas, Argentina</div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="img/Imagen de WhatsApp 2025-08-20 a las 11.47.15_246b194b.jpg" alt="Camión en Posadas">
+                    <div class="gallery-item-caption">Embalajes</div>
+                </div>
+
+
+                 <div class="gallery-item">
+                    <img src="https://www.atlasperucorp.com/wp-content/uploads/2018/10/CORPORATIVA.jpg" alt="Camión en Posadas">
+                    <div class="gallery-item-caption">Mudanzas Corporativas</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contacto">
+        <div class="container">
+            <h2>Contáctanos</h2>
+            <div class="contact-form-container">
+                <form action="mailto:tucorreo@ejemplo.com" method="post" enctype="text/plain">
+                    <div class="form-group">
+                        <label for="name">Nombre y Apellido</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Tu Mensaje</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/5491124952866" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-section">
+                <h4>Nuestra Empresa</h4>
+                <p>Somos una empresa de logística dedicada a ofrecer servicios de transporte confiables y eficientes entre Paraguay y Argentina.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Servicios</h4>
+                <ul>
+                    <li><a href="#servicios">Fletes</a></li>
+                    <li><a href="#servicios">Mudanzas</a></li>
+                    <li><a href="#servicios">Transporte de Carga</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces Útiles</h4>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#galeria">Galería</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>Encarnación, Paraguay</p>
+                <p>Posadas, Argentina</p>
+                <p>Email: <a href="mailto:tucorreo@ejemplo.com">tucorreo@ejemplo.com</a></p>
+                <p>Tel: +595 99 123 4567</p>
+                <div class="social-icons">
+                    <!-- Replace with your social media links -->
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-item a').forEach(n => n.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }));
+
+        // JavaScript for header image carousel
+        const headerImages = document.querySelectorAll('.header-image');
+        let currentImage = 0;
+
+        function changeHeaderImage() {
+            headerImages[currentImage].classList.remove('active');
+            currentImage = (currentImage + 1) % headerImages.length;
+            headerImages[currentImage].classList.add('active');
+        }
+
+        setInterval(changeHeaderImage, 5000); // Change image every 5 seconds
+    </script>
+</body>
+</html>
